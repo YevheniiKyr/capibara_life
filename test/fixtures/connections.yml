@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  frog_1: 1
+  frog2: 1
+  family_members_id: 1
+
+two:
+  frog_1: 1
+  frog2: 1
+  family_members_id: 1

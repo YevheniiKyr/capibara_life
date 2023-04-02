@@ -1,0 +1,2 @@
+class Capibara < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+module CapibarasHelper
+end
