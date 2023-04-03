@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   #put '/capibaras/:id', to: 'capibaras#update'
   #delete '/capibaras/:id', to: 'capibaras#destroy'
   resources :capibaras
+  resources :users, only: %i[create index]
+  post '/login', to: 'users#login'
 end
