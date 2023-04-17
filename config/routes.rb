@@ -5,5 +5,9 @@ Rails.application.routes.draw do
   #delete '/capibaras/:id', to: 'capibaras#destroy'
   resources :capibaras
   resources :users, only: %i[create index]
+  resources :connections
+  resources :connection_types
   post '/login', to: 'users#login'
+  get '/auth/check', to: 'users#check'
+  delete 'capibaras', to: 'capibaras#deleteAll'
 end

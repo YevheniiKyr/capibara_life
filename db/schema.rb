@@ -10,31 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_141533) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_082851) do
   create_table "capibaras", force: :cascade do |t|
     t.string "image"
     t.string "description"
-    t.float "age"
-    t.float "weight"
-    t.integer "money"
-    t.integer "power"
+    t.float "age", default: 0.0
+    t.float "weight", default: 10.0
+    t.integer "money", default: 100
+    t.integer "power", default: 10
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["name"], name: "index_capibaras_on_name", unique: true
+    t.index ["user_id"], name: "index_capibaras_on_user_id", unique: true
+  end
+
+  create_table "connection_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_connection_types_on_name", unique: true
   end
 
   create_table "connections", force: :cascade do |t|
-    t.integer "frog_1"
-    t.integer "frog2"
-    t.integer "family_members_id"
+    t.integer "capi_1", null: false
+    t.integer "capi_2", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "family_members", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "connection_type_id", null: false
+    t.string "status"
+    t.index ["connection_type_id"], name: "index_connections_on_connection_type_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,4 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_141533) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "capibaras", "users"
+  add_foreign_key "connections", "connection_types"
 end
