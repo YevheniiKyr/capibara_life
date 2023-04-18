@@ -1,5 +1,5 @@
 require_relative "boot"
-
+require_relative '../app/middleware/auth_middleware'
 require "rails/all"
 
 require 'dotenv'

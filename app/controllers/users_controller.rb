@@ -1,5 +1,4 @@
 require 'jwt'
-
 class UsersController < ApplicationController
   skip_forgery_protection
 
@@ -66,12 +65,14 @@ class UsersController < ApplicationController
   def genJWT (id, name, role)
     JWT.encode(
       { id: id, name: name, role: role },
-      'JWT_SECRET_KEY',
-      # ENV['JWT_SECRET_KEY'],
+      # 'JWT_SECRET_KEY',
+       ENV['JWT_SECRET_KEY'],
       'HS256',
-      { exp: Time.now.to_i + 20 },
+      { exp: Time.now.to_i + 200 },
     )
   end
+
+
 
 end
 
