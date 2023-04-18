@@ -39,7 +39,7 @@ class CapibarasController < ApplicationController
       respond_to do |format|
         format.json { render json: 'cant update' }
       end
-      # Handle successful update
+
 
     end
   end
