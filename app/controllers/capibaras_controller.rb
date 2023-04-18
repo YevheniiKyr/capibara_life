@@ -3,8 +3,8 @@
 class CapibarasController < ApplicationController
 
   skip_before_action :verify_authenticity_token
-  before_action :set_capi, only: %i[update, destroy, show]
-  after_action :add_json_response, only: %i[update, destroy, create]
+  before_action :set_capi, only: %i[ destroy, show]
+  after_action :add_json_response, only: %i[ destroy, create]
 
   def create
     puts 'WE ARE POST'
@@ -20,7 +20,28 @@ class CapibarasController < ApplicationController
   end
 
   def update
-    @capibara.update(capi_params)
+    capi_params = params.permit(:description, :weight, :money, :power, :name, :user_id, :image, :id)
+
+    if params[:image].present?
+      fileName = SecureRandom.uuid + '.jpg'
+      # puts 'PATH CHECK ', Rails.root.join('public/static').join(fileName)
+      # FileUtils.move(img.tempfile, Rails.root.join('public/static').join(fileName))
+      capi_params[:image] = fileName
+    end
+    capi_params = capi_params.to_h.compact
+    @capibara = Capibara.find(params[:id])
+    puts "CAAPI ", @capibara
+    if @capibara.update(capi_params)
+      respond_to do |format|
+        format.json { render json: @capibara }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: 'cant update' }
+      end
+      # Handle successful update
+
+    end
   end
 
   def destroy
@@ -36,18 +57,18 @@ class CapibarasController < ApplicationController
     if params[:id].present? && params[:filter].present?
       if params[:filter] == "friends"
         connection_type_id = ConnectionType.find_by_name("friends").id
-        connections_friends = Connection.where("(capi_1 = :id OR capi_2 = :id) AND connection_type_id = :connection_type_id AND status = 'approved'", id: params[:id], connection_type_id: connection_type_id )
+        connections_friends = Connection.where("(capi_1 = :id OR capi_2 = :id) AND connection_type_id = :connection_type_id AND status = 'approved'", id: params[:id], connection_type_id: connection_type_id)
 
         if connections_friends.present?
           connections_friends = connections_friends.map do |connection|
             if connection.capi_1.to_s == params[:id].to_s
               puts "true"
-               connection.capi_2
+              connection.capi_2
             else
               puts "false"
               puts connection.capi_1
               puts params[:id]
-               connection.capi_1
+              connection.capi_1
             end
           end
           @capibara = Capibara.where(id: connections_friends)
@@ -67,7 +88,7 @@ class CapibarasController < ApplicationController
         puts "WE FOUND SPOUSE_CON "
 
         if spouse_connection.present?
-          spouse_id = if spouse_connection.capi_1 == params[:id]
+          spouse_id = if spouse_connection.capi_1.to_s == params[:id].to_s
                         spouse_connection.capi_2
                       else
                         spouse_connection.capi_1
@@ -95,7 +116,6 @@ class CapibarasController < ApplicationController
           @capibara = nil
         end
       end
-
 
     else
       if params[:id].present?
@@ -135,7 +155,10 @@ class CapibarasController < ApplicationController
 
   def add_json_response
     respond_to do |format|
+      # @capibara ?
       format.json { render json: @capibara }
+      # : format.json { render json: 'Error' }
+
     end
     # response.body = { capi: @capibara }.to_json
   end
