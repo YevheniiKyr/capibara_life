@@ -5,27 +5,20 @@ class ConnectionTypesController < ApplicationController
   def create
     connect_params = params.require(:connection_type).permit(:name)
     connect = ConnectionType.create(connect_params)
-    respond_to do |format|
-      format.json { render json: connect }
-    end
+    render json: connect
 
   end
 
   def index
     connections = ConnectionType.all
-    respond_to do |format|
-      format.json { render json: connections }
-    end
+    render json: connections
   end
 
   def show
     id = params[:id]
-    puts 'ID ',id
-    @connection_type = ConnectionType.find(id)
-    respond_to do |format|
-      format.json { render json: @connection_type }
-    end
-    # @capibara.to_json
+    connection_type = ConnectionType.find(id)
+    render json: connection_type
+
   end
 
 

@@ -29,7 +29,20 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
-/public/assets
+/public/
+
+
+/bin
+.idea
+/Gemfile.lock
+/config/database.yml
+/config/environments/*.rb
+.env
+.ruby-version
+/test
+/vendor
+/tmp
+
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key

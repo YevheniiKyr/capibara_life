@@ -34,6 +34,6 @@ Rails.application.routes.draw do
   resources :connection_types
   post '/login', to: 'users#login'
   get '/auth/check', to: 'users#check'
-  delete 'capibaras', to: 'capibaras#deleteAll'
+  delete 'capibaras', to: 'capibaras#delete_all'
 
 end
