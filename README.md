@@ -18,6 +18,7 @@ CRUD operations implemented for each model
 # Endpoints
 
 1)Capibaras
+
 /capibaras 
 - post : {description, weight, money, name, power, image}
 - delete, 
@@ -29,6 +30,7 @@ CRUD operations implemented for each model
 - get
 
 2)Connection_types
+
 /connection_types 
 - post
 - get
@@ -37,6 +39,7 @@ CRUD operations implemented for each model
 - get
 
 3)Connections
+
 /connections
 - get
 - post : {capi_1, capi_2, connection_type_id, status}
@@ -47,6 +50,7 @@ CRUD operations implemented for each model
 - post : {status}
 
 4)Users
+
 /users 
 - post : {name, role, password}
 - get
