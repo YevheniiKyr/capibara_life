@@ -32,16 +32,16 @@
 /public/
 
 
-/bin
+bin
 .idea
 /Gemfile.lock
 /config/database.yml
 /config/environments/*.rb
 .env
 .ruby-version
-/test
-/vendor
-/tmp
+test
+vendor
+tmp
 
 
 # Ignore master key for decrypting credentials and more.
