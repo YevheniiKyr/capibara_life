@@ -34,6 +34,16 @@ Rails.application.routes.draw do
   resources :connection_types
   post '/login', to: 'users#login'
   get '/auth/check', to: 'users#check'
+  Rails.application.routes.draw do
+  resources :capibaras
+  resources :users, only: %i[create index]
+  resources :connections
+  resources :connection_types
+
+  post '/login', to: 'users#login'
+  get '/auth/check', to: 'users#check'
   delete 'capibaras', to: 'capibaras#delete_all'
+end
+
 
 end

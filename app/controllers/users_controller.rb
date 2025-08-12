@@ -7,12 +7,12 @@ class UsersController < ApplicationController
 
     user_params = params.require(:user).permit(:name, :role, :password)
     user = User.create(user_params)
-    unless @user.id
+    unless user.id
       render json: "Ім'я вже зайнятo"
       return
     end
     token = User.gen_jwt(user.id, user.name, user.role)
-    render json: token
+    render json: {token: token}
 
   end
 
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       return
     end
 
-    token = User.gen_jwt(@user.id, @user.name, @user.role)
+    token = User.gen_jwt(user.id, user.name, user.role)
     render json: token, status: 200
 
   end
@@ -44,12 +44,12 @@ class UsersController < ApplicationController
   def check
 
     token = request.headers['Authorization'].split(' ')[1]
-    if !token
+    unless token
       render json: { msg: 'you are not authorized' }, status: 401
     end
 
     decoded = JWT.decode(token, 'JWT_SECRET_KEY')
-    if !decoded
+    unless decoded
       render json: { msg: 'you are not authorized' }, status: 401
     end
     new_token = User.gen_jwt(decoded[0]["id"], decoded[0]["name"], decoded[0]["role"])

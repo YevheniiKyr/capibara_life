@@ -22,7 +22,7 @@ class ConnectionsController < ApplicationController
   def index
 
     if params[:capi_1].present? && params[:capi_2].present? && params[:filter].present?
-      connection = Connection.find_connect(params[:filter])
+      connection = Connection.find_connect(params[:filter], params[:capi_1], params[:capi_2])
 
     elsif params[:id].present? && params[:status]
       connection = Connection.find_with_status(params[:id], params[:status])
